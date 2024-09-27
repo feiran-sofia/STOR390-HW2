@@ -56,7 +56,7 @@ summary(iris_target_category)
 
 *Compared to what we observed in the class, this training data is smaller and less equally distributed on the three different categories. Setosa and virginica are well represented, but versicolor has fewer samples.*
 
-*Also, the test data is also not balanced. The setosa category only have 5 observations and virginica category only have 9 observations in the test dataset. As the test set is unbalanced, the classifier can perform poorly on them. KNN will tend to predict the majority class, versicolor, more often because there are simply more neighbors from that class.*
+*Also, the test data is also not balanced. The setosa category only have 5 observations and virginica category only have 9 observations in the test dataset. As the test set is unbalanced, the classifier can perform poorly on them. KNN will tend to predict the majority class, versicolor, more often because there are simply more neighbors from that class. Specifically, this model that I ran misclassified Virginica as Versicolor.*
 
 #
 
