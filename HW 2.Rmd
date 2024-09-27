@@ -1,0 +1,72 @@
+---
+title: "HW 2 Student"
+author: "Sofia Zhang"
+date: "09/27/2024"
+output: 
+  html_document:
+    number_sections: true
+---
+
+This homework is meant to illustrate the methods of classification algorithms as well as their potential pitfalls.  In class, we demonstrated K-Nearest-Neighbors using the `iris` dataset.  Today I will give you a different subset of this same data, and you will train a KNN classifier.  
+
+```{r, echo = FALSE}
+set.seed(123)
+library(class)
+
+df <- data(iris) 
+
+normal <-function(x) {
+  (x -min(x))/(max(x)-min(x))   
+}
+
+iris_norm <- as.data.frame(lapply(iris[,c(1,2,3,4)], normal))
+
+subset <- c(1:45, 58, 60:70, 82, 94, 110:150)
+iris_train <- iris_norm[subset,] 
+iris_test <- iris_norm[-subset,] 
+
+iris_target_category <- iris[subset,5]
+iris_test_category <- iris[-subset,5]
+
+```
+
+#
+Above, I have given you a training-testing partition.  Train the KNN with $K = 5$ on the training data and use this to classify the 50 test observations.  Once you have classified the test observations, create a contingency table -- like we did in class -- to evaluate which observations your algorithm is misclassifying.   
+
+```{r}
+set.seed(123)
+#STUDENT INPUT
+
+pr <- knn(iris_train, iris_test, cl=iris_target_category, k=5)
+tab <- table(pr, iris_test_category)
+tab
+```
+
+#
+
+Discuss your results.  If you have done this correctly, you should have a classification error rate that is roughly 20% higher than what we observed in class.  Why is this the case? In particular run a summary of the `iris_test_category` as well as `iris_target_category` and discuss how this plays a role in your answer.  
+
+```{r}
+summary(iris_test_category)
+```
+
+```{r}
+summary(iris_target_category)
+```
+
+*Compared to what we observed in the class, this training data is smaller and less equally distributed on the three different categories. Setosa and virginica are well represented, but versicolor has fewer samples.*
+
+*Also, the test data is also not balanced. The setosa category only have 5 observations and virginica category only have 9 observations in the test dataset. As the test set is unbalanced, the classifier can perform poorly on them. KNN will tend to predict the majority class, versicolor, more often because there are simply more neighbors from that class.*
+
+#
+
+Choice of $K$ can also influence this classifier.  Why would choosing $K = 6$ not be advisable for this data? 
+
+*There are three categories, thus if choose k=6, the k would be divisible by the number of class labels(3). It's possible to have an even number of neighbors from each of the three categories, thus KNN can't break the tie thus is not able to find a majority class. *
+
+#
+
+Build a github repository to store your homework assignments.  Share the link in this file.  
+
+*https://github.com/feiran-sofia/STOR390-HW2*
+
